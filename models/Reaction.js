@@ -9,7 +9,7 @@ const reactionSchema = new mongoose.Schema(
     reactionBody: { type: String, required: true, maxLength: 280 },
 
     username: { type: String, required: true },
-    // TODO: createdAt (date, default val to current timestamp, getter method to format timestamp on query)
+
     createdAt: { type: Date, default: Date.now, get: reformat },
   },
   {
@@ -19,6 +19,7 @@ const reactionSchema = new mongoose.Schema(
   }
 );
 
+// reformats time
 function reformat(createdAt) {
   const hours = createdAt.getUTCHours();
   const minutes = createdAt.getUTCMinutes();

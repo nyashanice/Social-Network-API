@@ -1,21 +1,27 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const userSchema = new Schema(
   {
     username: { type: String, unique: true, required: true, trim: true },
-    email: { type: String, unique: true, required: true },
-    // match: [
-    //   `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`,
-    //   "Please enter a valid email address.",
-    // ],
-    //   TODO: array of _id values referencing thought model
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+      validate: {
+        validator: function (email) {
+          return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
+        },
+        message: "Please enter a valid email address",
+      },
+    },
+    //   array of _id values referencing thought model
     thoughts: [
       {
         type: Schema.Types.ObjectId,
         ref: "Thought",
       },
     ],
-    //  TODO: array of _id values referencing User model (self ref)
+    //  array of _id values referencing User model
     friends: [
       {
         type: Schema.Types.ObjectId,
@@ -27,15 +33,14 @@ const userSchema = new Schema(
     toJSON: {
       virtuals: true,
     },
-    // id: false,
   }
 );
 
-// TODO: virtual called friendCount that retrieves length of user's friends array field on query
+// retrieves length of user's friends array field on query
 userSchema.virtual("friendCount").get(function () {
   return this.friends.length;
 });
 
 const User = model("user", userSchema);
 
-module.exports = {User};
+module.exports = { User };
