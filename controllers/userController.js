@@ -2,14 +2,14 @@ const { User } = require("../models/User");
 const { Thought } = require("../models/Thought");
 
 module.exports = {
-  // TODO: GET ALL USERS
+  // GET ALL USERS
   getUsers(req, res) {
     User.find()
       .select("-__v")
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: GET A SINGLE USER
+  // GET A SINGLE USER
   getOneUser(req, res) {
     User.findOne({ _id: req.params.userId })
       .select("-__v")
@@ -20,13 +20,13 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: POST A NEW USER
+  // POST A NEW USER
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: PUT TO UPDATE USER BY ID
+  // UPDATE USER BY ID
   updateUser(req, res) {
     User.findByIdAndUpdate(
       { _id: req.params.userId },
@@ -41,7 +41,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: DELETE USER BY ID
+  // DELETE USER BY ID
   deleteUser(req, res) {
     User.findByIdAndRemove({ _id: req.params.userId })
       .then((user) =>
@@ -52,6 +52,7 @@ module.exports = {
       .then(() => res.json({ message: "Deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
+  // ADD A NEW FRIEND TO FRIEND LIST
   addFriend(req, res) {
     User.findByIdAndUpdate(
       { _id: req.params.userId },
@@ -64,6 +65,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+  // REMOVE A FRIEND
   removeFriend(req, res) {
     User.findByIdAndUpdate(
       { _id: req.params.userId },
@@ -78,5 +80,3 @@ module.exports = {
   },
 };
 
-// TODO: POST TO ADD A NEW FRIEND TO FRIEND LIST
-// TODO: DELETE TO REMOVE A FRIEND

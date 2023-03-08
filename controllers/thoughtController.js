@@ -63,23 +63,31 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+  // TODO: POST TO CREATE REACTION STORED IN A SINGLE THOUGHT'S REACTIONS ARRAY
   addReaction(req, res) {
-      Thought.create(req.params)
-        .then(() => {
-          return User.findByIdAndUpdate(
-            { _id: req.params.userId },
-            { $addToSet: { friends: req.params.friendId } }
-          );
-        })
-        .then((user) =>
-          !user
-            ? res.status(404).json({ message: "Error received" })
-            : res.json("Friend added")
-        )
-        .catch((err) => res.status(500).json(err));
-  }
+    Thought.findByIdAndUpdate(
+      { _id: req.params.thoughtId },
+      { $addToSet: { reactions: req.body } }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "Error received" })
+          : res.json("Reaction added")
+      )
+      .catch((err) => res.status(500).json(err));
+  },
+  // TODO: DELETE A REACTION BY reactionId
+  removeReaction(req, res) {
+    Thought.findByIdAndUpdate(
+      { _id: req.params.thoughtId },
+      { $pull: { reactions: req.body.reactionId } }
+    )
+      .then((thought) =>
+        !thought
+          ? res.status(404).json({ message: "No thought found with that ID" })
+          : res.json("Reaction removed")
+      )
+      .catch((err) => res.status(500).json(err));
+  },
 };
 
-// TODO: CREATE ROUTE '/:thoughtId/reactions'
-// TODO: POST TO CREATE REACTION STORED IN A SINGLE THOUGHT'S REACTIONS ARRAY
-// TODO: DELETE A REACTION BY reactionId
