@@ -9,6 +9,7 @@ module.exports = {
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
+  
   // GET A SINGLE USER
   getOneUser(req, res) {
     User.findOne({ _id: req.params.userId })
@@ -20,12 +21,14 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
   // POST A NEW USER
   createUser(req, res) {
     User.create(req.body)
       .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
+
   // UPDATE USER BY ID
   updateUser(req, res) {
     User.findByIdAndUpdate(
@@ -41,6 +44,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
   // DELETE USER BY ID
   deleteUser(req, res) {
     User.findByIdAndRemove({ _id: req.params.userId })
@@ -52,6 +56,7 @@ module.exports = {
       .then(() => res.json({ message: "Deleted!" }))
       .catch((err) => res.status(500).json(err));
   },
+
   // ADD A NEW FRIEND TO FRIEND LIST
   addFriend(req, res) {
     User.findByIdAndUpdate(
@@ -65,6 +70,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+
   // REMOVE A FRIEND
   removeFriend(req, res) {
     User.findByIdAndUpdate(

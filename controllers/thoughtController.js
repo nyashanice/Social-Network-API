@@ -2,14 +2,15 @@ const { Thought } = require("../models/Thought");
 const { User } = require("../models/User");
 
 module.exports = {
-  // TODO: GET ALL THOUGHTS
+  // GET ALL THOUGHTS
   getThoughts(req, res) {
     Thought.find()
       .select("-__v")
       .then((thoughts) => res.json(thoughts))
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: GET A SINGLE THOUGHT
+
+  // GET A SINGLE THOUGHT
   getOneThought(req, res) {
     Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
@@ -20,7 +21,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: POST A NEW THOUGHT
+
+  // POST A NEW THOUGHT
   createThought(req, res) {
     Thought.create(req.body)
       .then((thought) => {
@@ -40,7 +42,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: PUT TO UPDATE THOUGHT BY ID
+
+  // UPDATE THOUGHT BY ID
   updateThought(req, res) {
     Thought.findByIdAndUpdate({ _id: req.params.thoughtId }, { $set: req.body })
       .then((thought) =>
@@ -50,7 +53,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: DELETE THOUGHT BY ID
+
+  // DELETE THOUGHT BY ID
   deleteThought(req, res) {
     Thought.findByIdAndRemove({ _id: req.params.thoughtId })
       .then((thought) =>
@@ -63,7 +67,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: POST TO CREATE REACTION STORED IN A SINGLE THOUGHT'S REACTIONS ARRAY
+
+  // CREATE REACTION STORED IN A SINGLE THOUGHT'S REACTIONS ARRAY
   addReaction(req, res) {
     Thought.findByIdAndUpdate(
       { _id: req.params.thoughtId },
@@ -76,7 +81,8 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // TODO: DELETE A REACTION BY reactionId
+  
+  // DELETE A REACTION BY reactionId
   removeReaction(req, res) {
     Thought.findByIdAndUpdate(
       { _id: req.params.thoughtId },
