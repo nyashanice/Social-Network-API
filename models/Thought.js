@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+const reactionSchema = require("./Reaction");
+const { Schema, model } = require("mongoose");
 
-const thoughtSchema = new mongoose.Schema(
+const thoughtSchema = new Schema(
   {
     // TODO: thoughtText (string, req, 1-280 char)
     thoughtText: { type: String, required: true, minLength: 1, maxLength: 280 },
@@ -11,12 +12,7 @@ const thoughtSchema = new mongoose.Schema(
     username: { type: String, required: true },
     // TODO: reactions (array of nested docs created with reactionSchema)
     // like replies
-    reactions: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "reaction",
-      },
-    ],
+    reactions: [reactionSchema],
   },
   {
     toJSON: {

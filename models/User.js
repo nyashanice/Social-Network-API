@@ -1,13 +1,13 @@
-const mongoose = require("mongoose");
+const {Schema, model} = require("mongoose");
 
-const userSchema = new mongoose.Schema(
+const userSchema = new Schema(
   {
     username: { type: String, unique: true, required: true, trim: true },
     email: { type: String, unique: true, required: true },
-    match: [
-      `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`,
-      "Please enter a valid email address.",
-    ],
+    // match: [
+    //   `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`,
+    //   "Please enter a valid email address.",
+    // ],
     //   TODO: array of _id values referencing thought model
     thoughts: [
       {
